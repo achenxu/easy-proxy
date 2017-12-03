@@ -8,7 +8,7 @@ const fs = require('fs');
 require('console.table');
 
 api = new DigitalOcean(config.digital_ocean.api_key, '9999');
-
+var created = []
 prompt.get([{
   name: 'count',
   required: true,
@@ -85,7 +85,7 @@ let createDroplet = (proxy) => {
     name: dropletName,
     region: config.digital_ocean.region,
     size: '512mb',
-    image: 'centos-7-0-x64',
+    image: 'centos-7-x64',
     ssh_keys: [config.digital_ocean.ssh_key_id],
     backups: false,
     ipv6: false,
@@ -123,18 +123,21 @@ let proxySetup = (droplet, username, password) => {
   ssh.exec(`yum install squid httpd-tools -y &&
             touch /etc/squid/passwd &&
             htpasswd -b /etc/squid/passwd ${username} ${password} &&
-            wget -O /etc/squid/squid.conf https://raw.githubusercontent.com/dzt/easy-proxy/master/confg/squid.conf --no-check-certificate &&
+            wget -O /etc/squid/squid.conf &&
+            //https://raw.githubusercontent.com/dzt/easy-proxy/master/confg/squid.conf --no-check-certificate &&
             touch /etc/squid/blacklist.acl &&
             systemctl restart squid.service && systemctl enable squid.service &&
             iptables -I INPUT -p tcp --dport 3128 -j ACCEPT &&
             iptables-save`
   ).start();
 
-  let proxy = {
-    'IP/HOST': host,
+  var proxy = {
+    'IP/HOST': {host},
     'Port': '3128',
-    'Username': username,
-    'Password': password
+    'Username': {username},
+    'Password': {password}
   };
-  return proxy;
+
+console.log(proxy);
+console.table([proxy]);
 }

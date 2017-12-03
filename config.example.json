@@ -1,10 +1,10 @@
 {
   "digital_ocean": {
-    "api_key": "xxxxxxxxxxx",
+    "api_key": "ENTER HERE",
     "ssh_key_id": 6926458,
-    "ssh_passphrase": "xxxxxx",
-    "region": "nyc3",
-    "rsa_id_path": "/Users/billy/.ssh/id_rsa"
+    "ssh_passphrase": "null",
+    "region": "nyc2",
+    "rsa_id_path": "/Users/alexischen/.ssh/id_rsa"
   },
   "vultr": {
     "apiKey": "xxxx"
